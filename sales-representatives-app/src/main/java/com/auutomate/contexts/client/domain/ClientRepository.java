@@ -1,7 +1,8 @@
 package com.auutomate.contexts.client.domain;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ClientRepository {
-	Optional<Client> searchAll();
+	Optional<List<Client>> searchAll();
 }

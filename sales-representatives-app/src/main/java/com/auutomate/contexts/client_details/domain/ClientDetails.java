@@ -4,13 +4,10 @@ package com.auutomate.contexts.client_details.domain;
 
 import java.util.Objects;
 
-import com.auutomate.contexts.client.domain.ClientId;
-import com.auutomate.contexts.client.domain.ClientMail;
-import com.auutomate.contexts.client.domain.ClientNID;
-import com.auutomate.contexts.client.domain.ClientName;
 import com.auutomate.contexts.client_details.domain.find.ClientDetailsFinder;
 import com.auutomate.contexts.client_details.domain.find.ClientNotFoundException;
 import com.auutomate.contexts.client_details.domain.registar.ClientDetailsRegistar;
+import com.auutomate.contexts.client_details.domain.update.ClientDetailsUpdater;
 import com.auutomate.contexts.shared.domain.EventBus;
 
 public final class ClientDetails {
@@ -67,6 +64,21 @@ public final class ClientDetails {
 		return ClientDetailsFinder.find(repo, id);
 	}
 	
+	// Update
+	public static void update(ClientDetailsRepository repo, EventBus bus, String idValue, String nameValue,
+			String nidValue, String mailValue, String bankAccountValue, String billingAddressNameValue,
+			String billingPopulationValue, Integer billingPostalCodeValue, String billingProvinceValue,
+			String deliveryAddressNameValue, String deliveryPopulationValue, Integer deliveryPostalCodeValue,
+			String deliveryProvinceValue) throws ClientNotFoundException {
+		// Throws exception if found client is null
+		ClientDetails c = ClientDetailsFinder.find(repo, idValue);
+		ClientDetailsUpdater.update(repo, bus, idValue, nameValue,
+			nidValue, mailValue, bankAccountValue, billingAddressNameValue,
+			billingPopulationValue, billingPostalCodeValue, billingProvinceValue,
+			deliveryAddressNameValue, deliveryPopulationValue, deliveryPostalCodeValue,
+			deliveryProvinceValue, c);
+	}
+	
 	
 	public String idValue() {
 	    return this.id.id();
@@ -75,17 +87,33 @@ public final class ClientDetails {
 	public String nameValue() {
 	    return this.name.name();
 	}
+	
+	public void updateName(String name) {
+		this.name = new ClientName(name);
+	}
 
 	public String nidValue() {
 	    return this.nid.nid();
+	}
+	
+	public void updateNid(String nid) {
+		this.nid = new ClientNID(nid);
 	}
 
 	public String mailValue() {
 	    return this.mail.mail();
 	}
 
+	public void updateMail(String mail) {
+		this.mail = new ClientMail(mail);
+	}
+	
 	public String bankAccountValue() {
 	    return this.bankAccount.account();
+	}
+	
+	public void updateBankAccount(String bankAccount) {
+		this.bankAccount = new ClientDetailsBankAccount(bankAccount);
 	}
 
 	public String billingAddressNameValue() {
@@ -122,7 +150,7 @@ public final class ClientDetails {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(bankAccount, billingAddress, deliveryAddress, id, mail, name, nid);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -134,17 +162,10 @@ public final class ClientDetails {
 		if (getClass() != obj.getClass())
 			return false;
 		ClientDetails other = (ClientDetails) obj;
-		return Objects.equals(bankAccount, other.bankAccount) && Objects.equals(billingAddress, other.billingAddress)
-				&& Objects.equals(deliveryAddress, other.deliveryAddress) && Objects.equals(id, other.id)
-				&& Objects.equals(mail, other.mail) && Objects.equals(name, other.name)
-				&& Objects.equals(nid, other.nid);
+		return Objects.equals(id, other.id);
 	}
 
 
-
-
-	
-	
 
 	
 }

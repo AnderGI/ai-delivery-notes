@@ -2,6 +2,8 @@ package com.auutomate.contexts.client.domain;
 
 import java.util.Random;
 
+import com.auutomate.contexts.client_details.domain.ClientNID;
+
 public final class ClientNIDMother {
 	 private static final char[] letrasControl = {'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 
              'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'};

@@ -49,7 +49,7 @@ public class ClientDetailsRegistarTest {
 	private void verifyRepoAndBusCall(ClientDetails client, ClientDetailsRepository repo, EventBus eventBus) {
 		ArgumentCaptor<ClientDetails> repoCaptor = ArgumentCaptor.forClass(ClientDetails.class);
 		Mockito.verify(repo, times(1)).save(repoCaptor.capture());
-		assertEquals(repoCaptor.getValue().idValue(), client.idValue());
+		assertEquals(repoCaptor.getValue(), client); 
 
 		Mockito.verify(eventBus, times(1)).publish(
 				ClientDetailsSavedDomainEventMother.create(repoCaptor.getValue().idValue(), repoCaptor.getValue().mailValue(), repoCaptor.getValue().nameValue()));

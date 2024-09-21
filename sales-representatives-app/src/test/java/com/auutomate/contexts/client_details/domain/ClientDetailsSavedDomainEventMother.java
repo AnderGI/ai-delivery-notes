@@ -1,9 +1,9 @@
 package com.auutomate.contexts.client_details.domain;
 
-import com.auutomate.contexts.client_details.domain.registar.ClientDetailsRegistarDomainEvent;
+import com.auutomate.contexts.client_details.domain.registar.ClientDetailsRegisteredDomainEvent;
 
 public final class ClientDetailsSavedDomainEventMother {
-	public static ClientDetailsRegistarDomainEvent create(String id, String mail, String name) {
-		return new ClientDetailsRegistarDomainEvent(id, mail, name);
+	public static ClientDetailsRegisteredDomainEvent create(String id, String mail, String name) {
+		return new ClientDetailsRegisteredDomainEvent(id, mail, name);
 	}
 }

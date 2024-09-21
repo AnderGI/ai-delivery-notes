@@ -1,4 +1,4 @@
-package com.auutomate.contexts.client.domain;
+package com.auutomate.contexts.client_details.domain;
 
 import java.util.Objects;
 

@@ -1,5 +1,6 @@
 package com.auutomate.contexts.client.domain;
 
+import com.auutomate.contexts.client_details.domain.ClientName;
 import com.github.javafaker.Faker;
 
 public final class ClientNameMother {

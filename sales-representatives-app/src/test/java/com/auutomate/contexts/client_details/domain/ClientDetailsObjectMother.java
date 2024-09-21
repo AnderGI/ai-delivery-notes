@@ -1,10 +1,8 @@
 package com.auutomate.contexts.client_details.domain;
 
-import com.auutomate.contexts.client.domain.ClientId;
 import com.auutomate.contexts.client.domain.ClientIdMother;
 import com.auutomate.contexts.client.domain.ClientMailMother;
 import com.auutomate.contexts.client.domain.ClientNIDMother;
-import com.auutomate.contexts.client.domain.ClientName;
 import com.auutomate.contexts.client.domain.ClientNameMother;
 
 public final class ClientDetailsObjectMother {

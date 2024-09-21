@@ -11,13 +11,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import com.auutomate.contexts.client.domain.ClientId;
 import com.auutomate.contexts.client.domain.ClientIdMother;
 import com.auutomate.contexts.client_details.application.save.ClientDetailsRegistar;
 import com.auutomate.contexts.client_details.domain.ClientDetails;
 import com.auutomate.contexts.client_details.domain.ClientDetailsObjectMother;
 import com.auutomate.contexts.client_details.domain.ClientDetailsRepository;
 import com.auutomate.contexts.client_details.domain.ClientDetailsSavedDomainEventMother;
+import com.auutomate.contexts.client_details.domain.ClientId;
 import com.auutomate.contexts.client_details.domain.find.ClientNotFoundException;
 import com.auutomate.contexts.shared.domain.EventBus;
 

@@ -1,9 +1,10 @@
 package com.auutomate.contexts.shared.domain;
 
 import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 
-public class DomainEvent {
+public abstract class DomainEvent {
 	private final Date ocurredOn;
 	private final String eventId;
 	public DomainEvent() {
@@ -18,4 +19,7 @@ public class DomainEvent {
 	public String getEventId() {
 		return this.eventId;
 	}
+	
+	public abstract String getEventName();
+		
 }

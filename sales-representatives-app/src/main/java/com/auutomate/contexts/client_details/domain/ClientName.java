@@ -1,12 +1,12 @@
-package com.auutomate.contexts.client.domain;
+package com.auutomate.contexts.client_details.domain;
 
 import java.util.Objects;
 
-public final record ClientId(String id) {
+public final record ClientName(String name) {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(name);
 	}
 
 	@Override
@@ -17,13 +17,13 @@ public final record ClientId(String id) {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ClientId other = (ClientId) obj;
-		return Objects.equals(id, other.id);
+		ClientName other = (ClientName) obj;
+		return Objects.equals(name, other.name);
 	}
 
 	@Override
 	public String toString() {
-		return id;
+		return name;
 	}
 
 }

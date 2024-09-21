@@ -29,6 +29,13 @@ public final class Clients {
 		return clientsDDBB;
 	}
 
+	public Integer indexOf(Client c) {
+		return clientsDDBB.indexOf(c);
+	}
+	
+	public void setClientAtIndex(Client c, Integer at) {
+		clientsDDBB.set(at, c);
+	}
 
 	@Override
 	public int hashCode() {

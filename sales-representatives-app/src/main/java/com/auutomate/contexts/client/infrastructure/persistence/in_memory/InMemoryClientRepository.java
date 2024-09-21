@@ -20,13 +20,23 @@ public class InMemoryClientRepository implements ClientRepository {
 
 	@Override
 	public void save(Client c) {
-		database.add(c);
+		Client client = this.search(new ClientId(c.getId())).orElse(null);
+		
+		if(client == null) {
+			database.add(c);
+		}else {
+			int index = database.indexOf(client);
+			database.setClientAtIndex(c, index);	
+		}
+		
 	}
 
 	@Override
 	public Optional<Client> search(ClientId id) {
 		// TODO Auto-generated method stub
-		return Optional.empty();
+		return database.getAll().stream()
+				.filter(c -> c.getId().equalsIgnoreCase(id.id()))
+				.findFirst();
 	}
 
 }

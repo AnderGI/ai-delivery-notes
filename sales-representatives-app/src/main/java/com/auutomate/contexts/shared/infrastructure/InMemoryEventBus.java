@@ -29,11 +29,14 @@ public class InMemoryEventBus implements EventBus<DomainEvent> {
 
 	@Override
 	public void publish(DomainEvent event) throws Exception {
-	    List<EventListener<? extends DomainEvent>> subscribers = map.get(event.getEventName());
-	    
+	    List<? extends EventListener<? extends DomainEvent>> subscribers = map.get(event.getEventName());
+
 	    if (subscribers != null) {
 	        for (EventListener<? extends DomainEvent> listener : subscribers) {
-	            listener.on(event);
+	            // Hacer un cast seguro al tipo correcto
+	            // @SuppressWarnings("unchecked")
+	            EventListener<DomainEvent> castedListener = (EventListener<DomainEvent>) listener;
+	            castedListener.on(event);  // Invocar el método on con el evento casteado
 	        }
 	    }
 		

@@ -10,4 +10,5 @@ public final class ClientMother {
 	public static Client create(String id, String name, String NID) {
 		return Client.fromPrimitives(id, name, NID);
 	}
+
 }

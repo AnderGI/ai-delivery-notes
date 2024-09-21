@@ -26,7 +26,6 @@ public final class UpdateClientNameOnClientDetailsNameUpdated implements EventLi
 	
 	@Override
 	public void on(ClientNameUpdatedDomainEvent event) throws ClientNotFoundException {
-		
 		ClientId id = new ClientId(event.getClientId());
 		
 		Client find = this.finder.find(id);

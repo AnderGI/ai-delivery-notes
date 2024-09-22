@@ -20,11 +20,11 @@ import com.auutomate.contexts.client_details.domain.ClientDetailsBankAccountMoth
 import com.auutomate.contexts.client_details.domain.ClientDetailsObjectMother;
 import com.auutomate.contexts.client_details.domain.ClientDetailsRepository;
 import com.auutomate.contexts.client_details.domain.ClientId;
-import com.auutomate.contexts.client_details.domain.find.ClientNotFoundException;
 import com.auutomate.contexts.client_details.domain.update.ClientBankAccountUpdatedDomainEvent;
 import com.auutomate.contexts.client_details.domain.update.ClientMailUpdatedDomainEvent;
 import com.auutomate.contexts.client_details.domain.update.ClientNameUpdatedDomainEvent;
 import com.auutomate.contexts.client_details.domain.update.ClientNidUpdatedDomainEvent;
+import com.auutomate.contexts.shared.aplication.find.ClientNotFoundException;
 import com.auutomate.contexts.shared.domain.DomainEvent;
 import com.auutomate.contexts.shared.domain.EventBus;
 

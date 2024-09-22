@@ -14,7 +14,7 @@ public final class ClientDetailsUpdater {
 			String nidValue, String mailValue, String bankAccountValue, String billingAddressNameValue,
 			String billingPopulationValue, Integer billingPostalCodeValue, String billingProvinceValue,
 			String deliveryAddressNameValue, String deliveryPopulationValue, Integer deliveryPostalCodeValue,
-			String deliveryProvinceValue, ClientDetails clientDetails) {
+			String deliveryProvinceValue, ClientDetails clientDetails) throws Exception {
 
 		if (!isNameEqual(clientDetails, nameValue)) {
 			clientDetails.updateName(nameValue);

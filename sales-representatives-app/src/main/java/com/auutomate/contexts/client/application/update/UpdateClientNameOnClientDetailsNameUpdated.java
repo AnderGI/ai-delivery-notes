@@ -15,10 +15,10 @@ import com.auutomate.contexts.shared.domain.EventListener;
 public final class UpdateClientNameOnClientDetailsNameUpdated implements EventListener<ClientNameUpdatedDomainEvent>{
 
 	private final ClientFinder finder;
-	private final ClientRegistar registar;
+	private final ClientNameUpdater registar;
 	private final List<Class<? extends DomainEvent>> events = Arrays.asList(ClientNameUpdatedDomainEvent.class);
 	
-	public UpdateClientNameOnClientDetailsNameUpdated(ClientFinder finder, ClientRegistar registar) {
+	public UpdateClientNameOnClientDetailsNameUpdated(ClientFinder finder, ClientNameUpdater registar) {
 		this.finder = finder;
 		this.registar = registar;
 	}
@@ -26,13 +26,7 @@ public final class UpdateClientNameOnClientDetailsNameUpdated implements EventLi
 	
 	@Override
 	public void on(ClientNameUpdatedDomainEvent event) throws ClientNotFoundException {
-		ClientId id = new ClientId(event.getClientId());
-		
-		Client find = this.finder.find(id);
-		
-		if(!this.isClientNameEqualToEventName(find, event)) {
-			registar.registar(find.getId(), event.getClientName(), find.getMail());
-		}
+		registar.update(event.getClientId(), event.getClientName());
 	}
 
 	@Override

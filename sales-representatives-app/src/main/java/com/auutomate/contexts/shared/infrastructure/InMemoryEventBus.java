@@ -8,6 +8,8 @@ import java.util.Map;
 import com.auutomate.contexts.client.application.find.ClientFinder;
 import com.auutomate.contexts.client.application.save.ClientRegistar;
 import com.auutomate.contexts.client.application.save.RegistarClientOnClientDetailsRegistered;
+import com.auutomate.contexts.client.application.update.ClientMailUpdater;
+import com.auutomate.contexts.client.application.update.ClientNameUpdater;
 import com.auutomate.contexts.client.application.update.UpdateClientMailOnClientDetailsMailUpdated;
 import com.auutomate.contexts.client.application.update.UpdateClientNameOnClientDetailsNameUpdated;
 import com.auutomate.contexts.client.domain.ClientRepository;
@@ -22,8 +24,8 @@ public class InMemoryEventBus implements EventBus<DomainEvent> {
 
 	public InMemoryEventBus() {
 		this.map.put("agi.client_details.event.registered.1", Arrays.asList(new RegistarClientOnClientDetailsRegistered(new ClientRegistar(clientRepo))));
-		this.map.put("agi.client_details.event.mail_updated.1", Arrays.asList(new UpdateClientMailOnClientDetailsMailUpdated(new ClientFinder(clientRepo),new ClientRegistar(clientRepo))));
-		this.map.put("agi.client_details.event.name_updated.1", Arrays.asList(new UpdateClientNameOnClientDetailsNameUpdated(new ClientFinder(clientRepo),new ClientRegistar(clientRepo))));
+		this.map.put("agi.client_details.event.mail_updated.1", Arrays.asList(new UpdateClientMailOnClientDetailsMailUpdated(new ClientFinder(clientRepo),new ClientMailUpdater(clientRepo))));
+		this.map.put("agi.client_details.event.name_updated.1", Arrays.asList(new UpdateClientNameOnClientDetailsNameUpdated(new ClientFinder(clientRepo),new ClientNameUpdater(clientRepo))));
 				
 	}
 

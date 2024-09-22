@@ -2,18 +2,30 @@ package com.auutomate.contexts.client.domain;
 
 import java.util.Objects;
 
+import com.auutomate.contexts.client.domain.update.ClientMailUpdater;
+import com.auutomate.contexts.client.domain.update.ClientNameUpdater;
 import com.auutomate.contexts.client_details.domain.ClientId;
 import com.auutomate.contexts.client_details.domain.ClientNID;
 import com.auutomate.contexts.client_details.domain.ClientName;
+import com.auutomate.contexts.shared.aplication.find.ClientNotFoundException;
 
 // Proyeccion
 public final class Client {
 	private final String id;
-	private final String name;
-	private final String mail; 
+	private String name;
+	private String mail; 
 
 	public static Client fromPrimitives(String id, String name, String mail) {
 		return new Client(id, name, mail);
+	}
+	
+	
+	public static void updateMail(ClientRepository repo,String id, String mail) throws ClientNotFoundException {
+		ClientMailUpdater.update(repo, id, mail);
+	}
+	
+	public static void updateName(ClientRepository repo,String id, String name) throws ClientNotFoundException {
+		ClientNameUpdater.update(repo, id, name);
 	}
 	
 	private Client(String id, String name, String mail) {
@@ -33,7 +45,15 @@ public final class Client {
 	public String getMail() {
 		return this.mail;
 	}
-
+	
+	public void updateMail(String mail) {
+		this.mail = mail;
+	}
+	
+	public void updateName(String name) {
+		this.name = name;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

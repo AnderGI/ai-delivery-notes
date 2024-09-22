@@ -15,10 +15,10 @@ import com.auutomate.contexts.shared.domain.EventListener;
 public class UpdateClientMailOnClientDetailsMailUpdated implements EventListener<ClientMailUpdatedDomainEvent>{
 
 	private final ClientFinder finder;
-	private final ClientRegistar registar;
+	private final ClientMailUpdater registar;
 	private final List<Class<? extends DomainEvent>> events = Arrays.asList(ClientMailUpdatedDomainEvent.class);
 	
-	public UpdateClientMailOnClientDetailsMailUpdated(ClientFinder finder, ClientRegistar registar) {
+	public UpdateClientMailOnClientDetailsMailUpdated(ClientFinder finder, ClientMailUpdater registar) {
 		this.finder = finder;
 		this.registar = registar;
 	}
@@ -26,15 +26,7 @@ public class UpdateClientMailOnClientDetailsMailUpdated implements EventListener
 	
 	@Override
 	public void on(ClientMailUpdatedDomainEvent event) throws ClientNotFoundException {
-		
-		ClientId id = new ClientId(event.getClientId());
-		
-		Client find = this.finder.find(id);
-		
-		if(!this.clientAnEventHaveTheSameCaseContent(find, event)) {
-			registar.registar(find.getId(), find.getName(), event.getClientMail());
-		}
-		
+		registar.update(event.getClientId(), event.getClientMail());
 	}
 
 	@Override
@@ -42,7 +34,4 @@ public class UpdateClientMailOnClientDetailsMailUpdated implements EventListener
 		return events;
 	}
 
-	private boolean clientAnEventHaveTheSameCaseContent(Client find, ClientMailUpdatedDomainEvent event) {
-		return find.getMail().equals(event.getClientMail());
-	}
 }

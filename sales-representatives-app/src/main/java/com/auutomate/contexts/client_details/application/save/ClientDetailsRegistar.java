@@ -14,7 +14,7 @@ public final class ClientDetailsRegistar {
 	
 	public void registar(String id, String name, String nid, String mail, String bankAccount, 
 			String bAddressName, String bPopulation, Integer bPostalCode, String bProvince,
-			String dAddressName, String dPopulation, Integer dPostalCode, String dProvince) {
+			String dAddressName, String dPopulation, Integer dPostalCode, String dProvince) throws Exception {
 		ClientDetails
 				.create(eventBus, repo, id, name, nid, mail, bankAccount, bAddressName, bPopulation, bPostalCode, bProvince, dAddressName, dPopulation, dPostalCode, dProvince);
 	}

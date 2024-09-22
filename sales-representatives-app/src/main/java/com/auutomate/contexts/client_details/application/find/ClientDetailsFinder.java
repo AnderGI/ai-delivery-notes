@@ -2,8 +2,7 @@ package com.auutomate.contexts.client_details.application.find;
 
 import com.auutomate.contexts.client_details.domain.ClientDetails;
 import com.auutomate.contexts.client_details.domain.ClientDetailsRepository;
-import com.auutomate.contexts.client_details.domain.ClientId;
-import com.auutomate.contexts.client_details.domain.find.ClientNotFoundException;
+import com.auutomate.contexts.shared.aplication.find.ClientNotFoundException;
 
 public final class ClientDetailsFinder {
 	private ClientDetailsRepository repo;

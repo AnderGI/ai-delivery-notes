@@ -14,7 +14,7 @@ import com.auutomate.contexts.client_details.domain.ClientName;
 import com.auutomate.contexts.shared.domain.EventBus;
 
 public final class ClientDetailsRegistar {
-	public static void registar(EventBus bus, ClientDetailsRepository repo, ClientDetails clientDetails) {
+	public static void registar(EventBus bus, ClientDetailsRepository repo, ClientDetails clientDetails) throws Exception {
 		repo.save(clientDetails);
 		bus.publish(new ClientDetailsRegisteredDomainEvent(clientDetails.idValue(), clientDetails.mailValue(),
 				clientDetails.nameValue()));

@@ -36,8 +36,11 @@ public class ClientDetailsFinderTest {
 		ClientId id = ClientIdMother.create(details.idValue());
 		this.mockClientDetailsSearchResult(id, Optional.ofNullable(details));
 		ClientDetails result = finder.find(id.id());
+		// Repo search same id
 		this.assertSearchCalledWithClientId(id);
+		// Rep same client result
 		this.assertClientDetailsEquals(result, details);
+		// Repo is being called
 		this.verifySearchIsBeingCalledOnce(id);
 		
 	}
@@ -45,9 +48,13 @@ public class ClientDetailsFinderTest {
 	@Test
 	void it_should_throw_an_exception_whit_non_existing_client(){
 		ClientId id = ClientIdMother.random();
+		// Mock repo search save method result
 		this.mockClientDetailsSearchResult(id, Optional.ofNullable(null));
+		// Not id -> exception
 		this.assertClientNotFound(id);
+		// Repo search called with same clientid
 		this.assertSearchCalledWithClientId(id);
+		// Repo search once called
 		this.verifySearchIsBeingCalledOnce(id);
 	}
 	

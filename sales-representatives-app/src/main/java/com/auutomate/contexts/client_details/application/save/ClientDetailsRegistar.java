@@ -12,10 +12,8 @@ public final class ClientDetailsRegistar {
 		this.eventBus = eventBus;
 	}
 	
-	public void registar(String id, String name, String nid, String mail, String bankAccount, 
-			String bAddressName, String bPopulation, Integer bPostalCode, String bProvince,
-			String dAddressName, String dPopulation, Integer dPostalCode, String dProvince) throws Exception {
+	public void registar(String id, String name, String mail) throws Exception {
 		ClientDetails
-				.create(eventBus, repo, id, name, nid, mail, bankAccount, bAddressName, bPopulation, bPostalCode, bProvince, dAddressName, dPopulation, dPostalCode, dProvince);
+				.create(eventBus, repo, id, name, mail);
 	}
 }

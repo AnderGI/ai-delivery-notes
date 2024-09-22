@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import com.auutomate.contexts.client.application.find.ClientFinder;
 import com.auutomate.contexts.client.application.registar.ClientRegistar;
-import com.auutomate.contexts.client.application.update.UpdateClientNameOnClientDetailsNameUpdated;
+import com.auutomate.contexts.client.application.update.ClientMailUpdater;
+import com.auutomate.contexts.client.application.update.ClientNameUpdater;
 import com.auutomate.contexts.client.domain.Client;
 import com.auutomate.contexts.client.domain.ClientIdMother;
 import com.auutomate.contexts.client.domain.ClientMother;
@@ -16,19 +17,24 @@ import com.auutomate.contexts.client.domain.ClientRepository;
 import com.auutomate.contexts.client.domain.Clients;
 import com.auutomate.contexts.client.domain.ClientsMother;
 import com.auutomate.contexts.client_details.domain.ClientId;
+import com.auutomate.contexts.client_details.domain.update.ClientMailUpdatedDomainEvent;
 import com.auutomate.contexts.client_details.domain.update.ClientNameUpdatedDomainEvent;
 import com.auutomate.contexts.shared.aplication.find.ClientNotFoundException;
 
 public class InMemoryClientRepositoryTest {
-	private ClientRepository inmemoryRepo;
+    private ClientRepository inmemoryRepo;
     private ClientFinder finder;
     private ClientRegistar registrar;
+    private ClientMailUpdater mailUpdater;
+    private ClientNameUpdater nameUpdater;
 
     @BeforeEach
     void setup() {
         inmemoryRepo = new InMemoryClientRepository();
         finder = new ClientFinder(inmemoryRepo);
         registrar = new ClientRegistar(inmemoryRepo);
+        mailUpdater = new ClientMailUpdater(inmemoryRepo);
+        nameUpdater = new ClientNameUpdater(inmemoryRepo);
     }
 
     @Test
@@ -82,17 +88,27 @@ public class InMemoryClientRepositoryTest {
     }
 
     @Test
-    void it_should_update_existing_client_via_event() throws ClientNotFoundException {
+    void it_should_update_existing_client_via_name_updater() throws ClientNotFoundException {
         Client client = givenARandomClient();
         registarNewClient(client);
 
         String newName = "Updated Name";
-        ClientNameUpdatedDomainEvent event = givenClientNameUpdatedEvent(client, newName);
-
-        handleClientNameUpdatedEvent(event);
+        updateClientName(client, newName);
 
         Client updatedClient = findClientById(client.getId());
         assertClientNameUpdated(updatedClient, newName);
+    }
+
+    @Test
+    void it_should_update_existing_client_via_mail_updater() throws ClientNotFoundException {
+        Client client = givenARandomClient();
+        registarNewClient(client);
+
+        String newMail = "updated@mail.com";
+        updateClientMail(client, newMail);
+
+        Client updatedClient = findClientById(client.getId());
+        assertClientMailUpdated(updatedClient, newMail);
     }
 
     // ----------------- Helper Methods for Better Semantics -----------------
@@ -113,6 +129,10 @@ public class InMemoryClientRepositoryTest {
         return new ClientNameUpdatedDomainEvent(client.getId(), newName);
     }
 
+    private ClientMailUpdatedDomainEvent givenClientMailUpdatedEvent(Client client, String newMail) {
+        return new ClientMailUpdatedDomainEvent(client.getId(), newMail);
+    }
+
     private void registarNewClient(Client client) {
         registrar.registar(client.getId(), client.getName(), client.getMail());
     }
@@ -129,9 +149,12 @@ public class InMemoryClientRepositoryTest {
         return finder.findAll();
     }
 
-    private void handleClientNameUpdatedEvent(ClientNameUpdatedDomainEvent event) throws ClientNotFoundException {
-        UpdateClientNameOnClientDetailsNameUpdated subscriber = new UpdateClientNameOnClientDetailsNameUpdated(finder, registrar);
-        subscriber.on(event);
+    private void updateClientName(Client client, String newName) throws ClientNotFoundException {
+        nameUpdater.update(client.getId(), newName);
+    }
+
+    private void updateClientMail(Client client, String newMail) throws ClientNotFoundException {
+        mailUpdater.update(client.getId(), newMail);
     }
 
     private void assertClientEquality(Client actual, Client expected) {
@@ -142,6 +165,10 @@ public class InMemoryClientRepositoryTest {
         assertEquals(expectedName, client.getName());
     }
 
+    private void assertClientMailUpdated(Client client, String expectedMail) {
+        assertEquals(expectedMail, client.getMail());
+    }
+
     private void assertClientsListEquality(Clients expected, Clients actual) {
         assertEquals(expected, actual);
     }
@@ -149,6 +176,4 @@ public class InMemoryClientRepositoryTest {
     private void assertClientsListIsEmpty(Clients clients) {
         assertEquals(0, clients.getAll().size());
     }
-
-
 }

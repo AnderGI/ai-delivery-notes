@@ -29,20 +29,26 @@ public class ClientDetailsRegistarTest {
     @Test
     void it_should_save_a_valid_client() throws Exception {
         ClientDetails client = ClientDetailsObjectMother.random();
+        // Call unit test entry point
         this.registerClient(client);
-        this.verifyRepoSavedClientDetails(client);
-        this.verifyEventBusPublishedCorrectEvent(client);
+        // Repo save method called once 
+        // Check if data used to invoke method matches expected client
+        this.verifyRepoSavedClientDetailsOnce(client);
+        // Bus called once
+        // Check if event data matches client
+        this.verifyEventBusPublishedCorrectEventOnlyOnce(client);
     }
-
-    // Method to verify the repository saved the correct ClientDetails
-    private void verifyRepoSavedClientDetails(ClientDetails expectedClient) {
+    
+    // Future test once VO validations added
+    
+    private void verifyRepoSavedClientDetailsOnce(ClientDetails expectedClient) {
         ArgumentCaptor<ClientDetails> repoCaptor = ArgumentCaptor.forClass(ClientDetails.class);
         Mockito.verify(repo, times(1)).save(repoCaptor.capture());
         assertEquals(expectedClient, repoCaptor.getValue());
     }
 
-    // Method to verify that the EventBus published the correct event
-    private void verifyEventBusPublishedCorrectEvent(ClientDetails client) throws Exception {
+   
+    private void verifyEventBusPublishedCorrectEventOnlyOnce(ClientDetails client) throws Exception {
         Mockito.verify(eventBus, times(1)).publish(
             ClientDetailsSavedDomainEventMother.create(
                 client.idValue(),
@@ -53,10 +59,7 @@ public class ClientDetailsRegistarTest {
     }
 
     private void registerClient(ClientDetails client) throws Exception {
-        saverUseCase.registar(client.idValue(), client.nameValue(), client.nidValue(), client.mailValue(),
-            client.bankAccountValue(), client.billingAddressNameValue(), client.billingPopulationValue(),
-            client.billingPostalCodeValue(), client.billingProvinceValue(), client.deliveryAddressNameValue(),
-            client.deliveryPopulationValue(), client.deliveryPostalCodeValue(), client.deliveryProvinceValue());
+        saverUseCase.registar(client.idValue(), client.nameValue(), client.mailValue());
     }
 
     private ClientDetailsRepository givenAClientDetailsRepoMock() {

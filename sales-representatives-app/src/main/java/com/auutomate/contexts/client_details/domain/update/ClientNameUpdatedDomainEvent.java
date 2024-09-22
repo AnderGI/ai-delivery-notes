@@ -26,4 +26,8 @@ public final class ClientNameUpdatedDomainEvent extends  DomainEvent{
 		return this.name;
 	}	
 	
+	
+	
+	
+	
 }

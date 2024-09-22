@@ -12,7 +12,7 @@ public final class ClientNameUpdater {
 		Client client = repo.search(clientId).orElse(null);
 		if(client == null) throw new ClientNotFoundException(clientId);
 		if(!client.getName().equals(name)) {
-			client.updateMail(name);
+			client.updateName(name);
 			repo.save(client);
 		}
 

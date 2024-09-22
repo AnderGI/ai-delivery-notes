@@ -10,22 +10,10 @@ public final class ClientDetailsObjectMother {
 		return new ClientDetails(
 				ClientIdMother.random().id(),
 				ClientNameMother.random().name(),
-				ClientNIDMother.random().nid(),
-				ClientMailMother.random().mail(),
-				ClientDetailsBankAccountMother.random().account(),
-				new ClientDetailsBillingAddressMother().randomAddress().getName(),
-				new ClientDetailsBillingAddressMother().randomAddress().getPopulation(),
-				new ClientDetailsBillingAddressMother().randomAddress().getPostalCode(),
-				new ClientDetailsBillingAddressMother().randomAddress().getProvince(),
-				new ClientDetailsDeliveryAddressMother().randomAddress().getName(),
-				new ClientDetailsDeliveryAddressMother().randomAddress().getPopulation(),
-				new ClientDetailsDeliveryAddressMother().randomAddress().getPostalCode(),
-				new ClientDetailsDeliveryAddressMother().randomAddress().getProvince()
+				ClientMailMother.random().mail()
 		);
 	}
-	public static ClientDetails create(String id, String name, String nid, String mail, String bankAccount, 
-			String bAddressName, String bPopulation, Integer bPostalCode, String bProvince,
-			String dAddressName, String dPopulation, Integer dPostalCode, String dProvince) {
-		return new ClientDetails(id, name, nid, mail, bankAccount, bAddressName, bPopulation, bPostalCode, bProvince, dAddressName, dPopulation, dPostalCode, dProvince);
+	public static ClientDetails create(String id, String name, String mail) {
+		return new ClientDetails(id, name, mail);
 	}
 }

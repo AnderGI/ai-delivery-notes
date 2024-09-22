@@ -15,7 +15,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import com.auutomate.contexts.client.application.find.ClientFinder;
-import com.auutomate.contexts.client.application.save.ClientRegistar;
+import com.auutomate.contexts.client.application.registar.ClientRegistar;
 import com.auutomate.contexts.client.domain.Client;
 import com.auutomate.contexts.client.domain.ClientIdMother;
 import com.auutomate.contexts.client.domain.ClientMother;

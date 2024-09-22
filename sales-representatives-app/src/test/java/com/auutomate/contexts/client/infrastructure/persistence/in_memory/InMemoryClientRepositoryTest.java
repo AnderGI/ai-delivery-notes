@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.auutomate.contexts.client.application.find.ClientFinder;
-import com.auutomate.contexts.client.application.save.ClientRegistar;
+import com.auutomate.contexts.client.application.registar.ClientRegistar;
 import com.auutomate.contexts.client.application.update.UpdateClientNameOnClientDetailsNameUpdated;
 import com.auutomate.contexts.client.domain.Client;
 import com.auutomate.contexts.client.domain.ClientIdMother;

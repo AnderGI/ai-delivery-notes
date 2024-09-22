@@ -2,6 +2,8 @@ package com.auutomate.contexts.client.domain;
 
 import java.util.Objects;
 
+import com.auutomate.contexts.client.domain.find.ClientFinder;
+import com.auutomate.contexts.client.domain.registar.ClientRegistar;
 import com.auutomate.contexts.client.domain.update.ClientMailUpdater;
 import com.auutomate.contexts.client.domain.update.ClientNameUpdater;
 import com.auutomate.contexts.client_details.domain.ClientId;
@@ -26,6 +28,18 @@ public final class Client {
 	
 	public static void updateName(ClientRepository repo,String id, String name) throws ClientNotFoundException {
 		ClientNameUpdater.update(repo, id, name);
+	}
+
+	public static Clients findAll(ClientRepository repo){
+		return ClientFinder.findAll(repo);
+	}
+	
+	public static Client find(ClientRepository repo,String id) throws ClientNotFoundException {
+		return ClientFinder.find(repo, id);
+	}
+	
+	public static void registar(ClientRepository repo, String id, String name, String mail) {
+		ClientRegistar.registar(repo, id, name, mail);
 	}
 	
 	private Client(String id, String name, String mail) {

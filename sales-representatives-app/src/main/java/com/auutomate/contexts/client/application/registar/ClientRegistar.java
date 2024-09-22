@@ -1,4 +1,4 @@
-package com.auutomate.contexts.client.application.save;
+package com.auutomate.contexts.client.application.registar;
 
 import com.auutomate.contexts.client.domain.Client;
 import com.auutomate.contexts.client.domain.ClientRepository;
@@ -11,7 +11,6 @@ public final class ClientRegistar {
 	}
 	
 	public void registar(String id, String name, String mail) {
-		Client c = Client.fromPrimitives(id, name, mail);
-		repo.save(c);
+		Client.registar(repo, id, name, mail);
 	}
 }

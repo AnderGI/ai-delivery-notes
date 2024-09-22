@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.auutomate.contexts.client.application.find.ClientFinder;
-import com.auutomate.contexts.client.application.save.ClientRegistar;
+import com.auutomate.contexts.client.application.registar.ClientRegistar;
 import com.auutomate.contexts.client.domain.Client;
 import com.auutomate.contexts.client_details.domain.ClientId;
 import com.auutomate.contexts.client_details.domain.update.ClientMailUpdatedDomainEvent;

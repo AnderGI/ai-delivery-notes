@@ -17,9 +17,10 @@ public final class ClientFinder {
 		return this.repo.searchAll().orElse(null);
 	}
 	
-	public Client find(ClientId id) throws ClientNotFoundException {
-		Client c = this.repo.search(id).orElse(null);
-		if(c == null) throw new ClientNotFoundException(id);
+	public Client find(String id) throws ClientNotFoundException {
+		ClientId clientId = new ClientId(id);
+		Client c = this.repo.search(clientId).orElse(null);
+		if(c == null) throw new ClientNotFoundException(clientId);
 		return c;
 	}
 }

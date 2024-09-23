@@ -142,7 +142,7 @@ public class InMemoryClientRepositoryTest {
     }
 
     private Client findClientById(String clientId) throws ClientNotFoundException {
-        return finder.find(ClientIdMother.create(clientId));
+        return finder.find(clientId);
     }
 
     private Clients findAllClients() {

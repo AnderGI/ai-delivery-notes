@@ -1,0 +1,98 @@
+package com.auutomate.src.backoffice.client.application.find;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
+
+import com.auutomate.src.backoffice.client.domain.ClientDetailsObjectMother;
+import com.auutomate.src.backoffice.client_details.application.find.ClientDetailsFinder;
+import com.auutomate.src.backoffice.client_details.application.find.FindClientDetailsQuery;
+import com.auutomate.src.backoffice.client_details.application.find.FindClientDetailsQueryHandler;
+import com.auutomate.src.backoffice.client_details.domain.ClientDetails;
+import com.auutomate.src.backoffice.client_details.domain.ClientDetailsRepository;
+import com.auutomate.src.backoffice.client_details.domain.ClientId;
+import com.auutomate.src.backoffice.client_details.domain.find.ClientDetailsResponse;
+import com.auutomate.src.frontoffice.client.domain.ClientIdMother;
+import com.auutomate.src.shared.aplication.find.ClientNotFoundException;
+
+public class ClientDetailsFinderTest {
+	private ClientDetailsRepository repo;
+	private ClientDetailsFinder finder;
+	private FindClientDetailsQueryHandler handler;
+	
+	@BeforeEach
+	void setup() {
+		repo = this.givenAClientDetailsRepoMock();
+		finder = this.givenAClientFinder(repo);
+		handler = new FindClientDetailsQueryHandler(finder);
+	}
+	
+	@Test
+	void it_should_find_an_existing_client() throws Exception {
+		ClientDetails details = ClientDetailsObjectMother.random();
+		ClientId id = ClientIdMother.create(details.idValue());
+		this.mockClientDetailsSearchResult(id, Optional.ofNullable(details));
+		ClientDetailsResponse response = handler.handle(new FindClientDetailsQuery(details.idValue()));
+		// Repo search same id
+		this.assertSearchCalledWithClientId(id);
+		// Rep same client result
+		this.assertClientDetailsEqualsResponse(details, response);
+		// Repo is being called
+		this.verifySearchIsBeingCalledOnce(id);
+		
+	}
+
+	@Test
+	void it_should_throw_an_exception_whit_non_existing_client(){
+		ClientId id = ClientIdMother.random();
+		// Mock repo search save method result
+		this.mockClientDetailsSearchResult(id, Optional.ofNullable(null));
+		// Not id -> exception
+		this.assertClientNotFound(id);
+		// Repo search called with same clientid
+		this.assertSearchCalledWithClientId(id);
+		// Repo search once called
+		this.verifySearchIsBeingCalledOnce(id);
+	}
+	
+	private void assertSearchCalledWithClientId(ClientId id) {
+		ArgumentCaptor<ClientId> clientId = ArgumentCaptor.forClass(ClientId.class);
+		verify(repo).search(clientId.capture());
+		assertEquals(id, clientId.getValue());		
+	}
+	
+	private void verifySearchIsBeingCalledOnce(ClientId id) {
+		Mockito.verify(repo, times(1)).search(id);
+	}
+
+	private void assertClientNotFound(ClientId id) {
+		assertThrows(ClientNotFoundException.class, () -> handler.handle(new FindClientDetailsQuery(id.id())));
+	}
+	
+	private void assertClientDetailsEqualsResponse(ClientDetails client, ClientDetailsResponse response) {
+		assertEquals(client.idValue(), response.id());
+		assertEquals(client.nameValue(), response.name());
+		assertEquals(client.mailValue(), response.mail());
+	}
+	
+	private void mockClientDetailsSearchResult(ClientId id, Optional<ClientDetails> expectedResult) {
+		Mockito.when(repo.search(id)).thenReturn(expectedResult);
+	}
+
+	private ClientDetailsRepository givenAClientDetailsRepoMock() {
+		// TODO Auto-generated method stub
+		return Mockito.mock(ClientDetailsRepository.class);
+	}
+
+	private ClientDetailsFinder givenAClientFinder(ClientDetailsRepository repo) {
+		return new ClientDetailsFinder(repo);
+	}
+}

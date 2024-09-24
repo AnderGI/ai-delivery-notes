@@ -1,4 +1,4 @@
-package com.auutomate.src.backoffice.product;
+package com.auutomate.src.backoffice.product.domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;

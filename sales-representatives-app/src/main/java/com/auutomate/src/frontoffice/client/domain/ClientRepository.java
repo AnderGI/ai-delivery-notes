@@ -2,7 +2,7 @@ package com.auutomate.src.frontoffice.client.domain;
 
 import java.util.Optional;
 
-import com.auutomate.src.backoffice.client_details.domain.ClientId;
+import com.auutomate.src.backoffice.client.domain.ClientId;
 
 public interface ClientRepository {
 	Optional<Clients> searchAll();

@@ -1,6 +1,6 @@
 package com.auutomate.src.frontoffice.client.application.find;
 
-import com.auutomate.src.backoffice.client_details.domain.ClientId;
+import com.auutomate.src.backoffice.client.domain.ClientId;
 import com.auutomate.src.frontoffice.client.domain.Client;
 import com.auutomate.src.frontoffice.client.domain.ClientRepository;
 import com.auutomate.src.frontoffice.client.domain.Clients;

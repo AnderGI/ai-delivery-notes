@@ -14,8 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import com.auutomate.src.backoffice.client_details.domain.ClientId;
-import com.auutomate.src.backoffice.client_details.domain.update.ClientMailUpdatedDomainEvent;
+import com.auutomate.src.backoffice.client.domain.ClientId;
+import com.auutomate.src.backoffice.client.domain.update.ClientMailUpdatedDomainEvent;
 import com.auutomate.src.frontoffice.client.application.find.ClientFinder;
 import com.auutomate.src.frontoffice.client.application.update.ClientMailUpdater;
 import com.auutomate.src.frontoffice.client.application.update.UpdateClientMailOnClientDetailsMailUpdated;

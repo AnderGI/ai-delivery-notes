@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import com.auutomate.src.backoffice.client_details.domain.registar.ClientDetailsRegisteredDomainEvent;
+import com.auutomate.src.backoffice.client.domain.registar.ClientRegisteredDomainEvent;
 import com.auutomate.src.frontoffice.client.application.registar.ClientRegistar;
 import com.auutomate.src.frontoffice.client.application.registar.RegistarClientOnClientDetailsRegistered;
 import com.auutomate.src.frontoffice.client.domain.Client;
@@ -18,7 +18,7 @@ import com.auutomate.src.frontoffice.client.domain.ClientRepository;
 
 public class RegistarClientOnClientDetailsRegisteredTest {
 
-    private ClientDetailsRegisteredDomainEvent event;
+    private ClientRegisteredDomainEvent event;
     private ClientRepository repo;
     private ClientRegistar registar;
     private RegistarClientOnClientDetailsRegistered subscriber;
@@ -54,7 +54,7 @@ public class RegistarClientOnClientDetailsRegisteredTest {
         return new ClientRegistar(repo);
     }
 
-    private ClientDetailsRegisteredDomainEvent givenAClientDetailsRegisteredDomainEvent() {
+    private ClientRegisteredDomainEvent givenAClientDetailsRegisteredDomainEvent() {
         return ClientDetailsRegisteredDomainEventMother.random();
     }
 
@@ -72,7 +72,7 @@ public class RegistarClientOnClientDetailsRegisteredTest {
         verify(repo, times(1)).save(Mockito.any(Client.class));
     }
 
-    private void verifyCapturedClientDataMatchesEventData(ArgumentCaptor<Client> clientCaptor, ClientDetailsRegisteredDomainEvent event) {
+    private void verifyCapturedClientDataMatchesEventData(ArgumentCaptor<Client> clientCaptor, ClientRegisteredDomainEvent event) {
         Client capturedClient = clientCaptor.getValue();
         assertEquals(capturedClient.getId(), event.getClientId());
         assertEquals(capturedClient.getName(), event.getClientName());

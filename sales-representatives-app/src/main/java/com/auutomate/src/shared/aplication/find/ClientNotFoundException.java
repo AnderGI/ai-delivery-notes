@@ -1,6 +1,6 @@
 package com.auutomate.src.shared.aplication.find;
 
-import com.auutomate.src.backoffice.client_details.domain.ClientId;
+import com.auutomate.src.backoffice.client.domain.ClientId;
 
 public final class ClientNotFoundException extends Exception{
 	public ClientNotFoundException(ClientId id) {

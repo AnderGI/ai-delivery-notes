@@ -13,32 +13,32 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
+import com.auutomate.src.backoffice.client.application.update.ClientMailUpdater;
+import com.auutomate.src.backoffice.client.application.update.UpdateClientMailCommand;
+import com.auutomate.src.backoffice.client.application.update.UpdateClientMailCommandHandler;
+import com.auutomate.src.backoffice.client.domain.Client;
 import com.auutomate.src.backoffice.client.domain.ClientDetailsObjectMother;
-import com.auutomate.src.backoffice.client_details.application.update.ClientDetailsMailUpdater;
-import com.auutomate.src.backoffice.client_details.application.update.UpdateClientDetailsMailCommand;
-import com.auutomate.src.backoffice.client_details.application.update.UpdateClientDetailsMailCommandHandler;
-import com.auutomate.src.backoffice.client_details.domain.ClientDetails;
-import com.auutomate.src.backoffice.client_details.domain.ClientDetailsRepository;
-import com.auutomate.src.backoffice.client_details.domain.update.ClientMailUpdatedDomainEvent;
+import com.auutomate.src.backoffice.client.domain.ClientRepository;
+import com.auutomate.src.backoffice.client.domain.update.ClientMailUpdatedDomainEvent;
 import com.auutomate.src.frontoffice.client.domain.ClientIdMother;
 import com.auutomate.src.shared.aplication.find.ClientNotFoundException;
 import com.auutomate.src.shared.domain.EventBus;
 
 public class ClientDetailsMailUpdaterTest {
-	private ClientDetails client;
-	private ClientDetailsRepository repo;
+	private Client client;
+	private ClientRepository repo;
 	private EventBus bus;
-	private ClientDetailsMailUpdater updater;
-	private UpdateClientDetailsMailCommandHandler handler;
+	private ClientMailUpdater updater;
+	private UpdateClientMailCommandHandler handler;
 	private final String newMail = "NEW_MAIL";
 	
 	@BeforeEach
 	void setup() {
 		client = ClientDetailsObjectMother.random();
-		repo = Mockito.mock(ClientDetailsRepository.class);
+		repo = Mockito.mock(ClientRepository.class);
 		bus = Mockito.mock(EventBus.class);
-		updater = new ClientDetailsMailUpdater(repo, bus);
-		handler = new UpdateClientDetailsMailCommandHandler(updater);
+		updater = new ClientMailUpdater(repo, bus);
+		handler = new UpdateClientMailCommandHandler(updater);
 	}
 	
 	
@@ -80,7 +80,7 @@ public class ClientDetailsMailUpdaterTest {
 	}
 	
 	private void verifyNumberOfRepoSaveCalls(int n) {
-		ArgumentCaptor<ClientDetails> details = ArgumentCaptor.forClass(ClientDetails.class);
+		ArgumentCaptor<Client> details = ArgumentCaptor.forClass(Client.class);
 		verify(repo, times(n)).save(details.capture());
 	}
 
@@ -90,13 +90,13 @@ public class ClientDetailsMailUpdaterTest {
 	}
 	
 	private void assertClientEquality() {
-		ArgumentCaptor<ClientDetails> details = ArgumentCaptor.forClass(ClientDetails.class);
+		ArgumentCaptor<Client> details = ArgumentCaptor.forClass(Client.class);
 		verify(repo).save(details.capture());
 		assertEquals(client, details.getValue());
 	}
 	
 	private void updateClientMail(String newName) throws Exception {
-		handler.handle(new UpdateClientDetailsMailCommand(client.idValue(), newName));
+		handler.handle(new UpdateClientMailCommand(client.idValue(), newName));
 	}
 	
 	private void assertEventEquality() throws Exception {

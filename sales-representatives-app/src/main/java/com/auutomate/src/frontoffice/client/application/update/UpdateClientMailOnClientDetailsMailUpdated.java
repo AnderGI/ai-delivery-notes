@@ -3,7 +3,7 @@ package com.auutomate.src.frontoffice.client.application.update;
 import java.util.Arrays;
 import java.util.List;
 
-import com.auutomate.src.backoffice.client_details.domain.update.ClientMailUpdatedDomainEvent;
+import com.auutomate.src.backoffice.client.domain.update.ClientMailUpdatedDomainEvent;
 import com.auutomate.src.frontoffice.client.application.find.ClientFinder;
 import com.auutomate.src.shared.aplication.find.ClientNotFoundException;
 import com.auutomate.src.shared.domain.DomainEvent;

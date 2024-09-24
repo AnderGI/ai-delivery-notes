@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.auutomate.src.backoffice.client_details.domain.ClientId;
-import com.auutomate.src.backoffice.client_details.domain.update.ClientMailUpdatedDomainEvent;
-import com.auutomate.src.backoffice.client_details.domain.update.ClientNameUpdatedDomainEvent;
+import com.auutomate.src.backoffice.client.domain.ClientId;
+import com.auutomate.src.backoffice.client.domain.update.ClientMailUpdatedDomainEvent;
+import com.auutomate.src.backoffice.client.domain.update.ClientNameUpdatedDomainEvent;
 import com.auutomate.src.frontoffice.client.application.find.ClientFinder;
 import com.auutomate.src.frontoffice.client.application.registar.ClientRegistar;
 import com.auutomate.src.frontoffice.client.application.update.ClientMailUpdater;

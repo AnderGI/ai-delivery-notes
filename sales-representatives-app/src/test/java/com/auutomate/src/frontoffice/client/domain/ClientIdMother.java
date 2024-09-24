@@ -2,7 +2,7 @@ package com.auutomate.src.frontoffice.client.domain;
 
 import java.util.UUID;
 
-import com.auutomate.src.backoffice.client_details.domain.ClientId;
+import com.auutomate.src.backoffice.client.domain.ClientId;
 
 
 public final class ClientIdMother {

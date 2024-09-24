@@ -8,32 +8,32 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
+import com.auutomate.src.backoffice.client.application.save.ClientRegistar;
+import com.auutomate.src.backoffice.client.application.save.RegisterClientCommand;
+import com.auutomate.src.backoffice.client.application.save.RegisterClientCommandHandler;
+import com.auutomate.src.backoffice.client.domain.Client;
 import com.auutomate.src.backoffice.client.domain.ClientDetailsObjectMother;
-import com.auutomate.src.backoffice.client_details.application.save.ClientDetailsRegistar;
-import com.auutomate.src.backoffice.client_details.application.save.RegisterClientDetailsCommand;
-import com.auutomate.src.backoffice.client_details.application.save.RegisterClientDetailsCommandHandler;
-import com.auutomate.src.backoffice.client_details.domain.ClientDetails;
-import com.auutomate.src.backoffice.client_details.domain.ClientDetailsRepository;
-import com.auutomate.src.backoffice.client_details.domain.registar.ClientDetailsRegisteredDomainEvent;
+import com.auutomate.src.backoffice.client.domain.ClientRepository;
+import com.auutomate.src.backoffice.client.domain.registar.ClientRegisteredDomainEvent;
 import com.auutomate.src.shared.domain.EventBus;
 
 public class ClientDetailsRegistarTest {
-    private ClientDetailsRepository repo;
+    private ClientRepository repo;
     private EventBus eventBus;
-    private ClientDetailsRegistar saverUseCase;
-    private RegisterClientDetailsCommandHandler handler;
+    private ClientRegistar saverUseCase;
+    private RegisterClientCommandHandler handler;
 
     @BeforeEach
     void setup() {
         repo = this.givenAClientDetailsRepoMock();
         eventBus = this.givenAEventBusMock();
         saverUseCase = this.givenClientDetailsSaverUseCase(repo, eventBus);
-        handler = new RegisterClientDetailsCommandHandler(saverUseCase);
+        handler = new RegisterClientCommandHandler(saverUseCase);
     }
 
     @Test
     void it_should_save_a_valid_client() throws Exception {
-        ClientDetails client = ClientDetailsObjectMother.random();
+        Client client = ClientDetailsObjectMother.random();
         // Call unit test entry point
         this.registerClient(client);
         // Repo save method called once 
@@ -46,37 +46,37 @@ public class ClientDetailsRegistarTest {
     
     // Future test once VO validations added
     
-    private void verifyRepoSavedClientDetailsOnce(ClientDetails expectedClient) {
-        ArgumentCaptor<ClientDetails> repoCaptor = ArgumentCaptor.forClass(ClientDetails.class);
+    private void verifyRepoSavedClientDetailsOnce(Client expectedClient) {
+        ArgumentCaptor<Client> repoCaptor = ArgumentCaptor.forClass(Client.class);
         Mockito.verify(repo, times(1)).save(repoCaptor.capture());
         assertEquals(expectedClient, repoCaptor.getValue());
     }
 
    
-    private void verifyEventBusPublishedCorrectEventOnlyOnce(ClientDetails client) throws Exception {
-        ArgumentCaptor<ClientDetailsRegisteredDomainEvent> eventCaptor = ArgumentCaptor.forClass(ClientDetailsRegisteredDomainEvent.class);
+    private void verifyEventBusPublishedCorrectEventOnlyOnce(Client client) throws Exception {
+        ArgumentCaptor<ClientRegisteredDomainEvent> eventCaptor = ArgumentCaptor.forClass(ClientRegisteredDomainEvent.class);
         Mockito.verify(eventBus, times(1)).publish(eventCaptor.capture());
 
-        ClientDetailsRegisteredDomainEvent capturedEvent = eventCaptor.getValue();
+        ClientRegisteredDomainEvent capturedEvent = eventCaptor.getValue();
         assertEquals(client.idValue(), capturedEvent.getClientId());
         assertEquals(client.mailValue(), capturedEvent.getClientMail());
         assertEquals(client.nameValue(), capturedEvent.getClientName());
     }
 
 
-    private void registerClient(ClientDetails client) throws Exception {
-        handler.handle(new RegisterClientDetailsCommand(client.idValue(), client.nameValue(), client.mailValue()));
+    private void registerClient(Client client) throws Exception {
+        handler.handle(new RegisterClientCommand(client.idValue(), client.nameValue(), client.mailValue()));
     }
 
-    private ClientDetailsRepository givenAClientDetailsRepoMock() {
-        return Mockito.mock(ClientDetailsRepository.class);
+    private ClientRepository givenAClientDetailsRepoMock() {
+        return Mockito.mock(ClientRepository.class);
     }
 
     private EventBus givenAEventBusMock() {
         return Mockito.mock(EventBus.class);
     }
 
-    private ClientDetailsRegistar givenClientDetailsSaverUseCase(ClientDetailsRepository repo, EventBus eventBus) {
-        return new ClientDetailsRegistar(repo, eventBus);
+    private ClientRegistar givenClientDetailsSaverUseCase(ClientRepository repo, EventBus eventBus) {
+        return new ClientRegistar(repo, eventBus);
     }
 }

@@ -26,6 +26,7 @@ public class ClientDetailsMailUpdaterTest {
 	private ClientDetailsRepository repo;
 	private EventBus bus;
 	private ClientDetailsMailUpdater updater;
+	private UpdateClientDetailsMailCommandHandler handler;
 	private final String newMail = "NEW_MAIL";
 	
 	@BeforeEach
@@ -34,6 +35,7 @@ public class ClientDetailsMailUpdaterTest {
 		repo = Mockito.mock(ClientDetailsRepository.class);
 		bus = Mockito.mock(EventBus.class);
 		updater = new ClientDetailsMailUpdater(repo, bus);
+		handler = new UpdateClientDetailsMailCommandHandler(updater);
 	}
 	
 	
@@ -91,7 +93,7 @@ public class ClientDetailsMailUpdaterTest {
 	}
 	
 	private void updateClientMail(String newName) throws Exception {
-		updater.update(client.idValue(), newName);
+		handler.handle(new UpdateClientDetailsMailCommand(client.idValue(), newName));
 	}
 	
 	private void assertEventEquality() throws Exception {

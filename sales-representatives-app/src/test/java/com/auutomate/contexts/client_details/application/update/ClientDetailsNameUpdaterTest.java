@@ -27,6 +27,7 @@ public class ClientDetailsNameUpdaterTest {
 	private ClientDetailsRepository repo;
 	private EventBus bus;
 	private ClientDetailsNameUpdater updater;
+	private UpdateClientDetailsNameCommandHandler handler;
 	private final String newName = "NEW_NAME";
 	
 	@BeforeEach
@@ -35,6 +36,7 @@ public class ClientDetailsNameUpdaterTest {
 		repo = Mockito.mock(ClientDetailsRepository.class);
 		bus = Mockito.mock(EventBus.class);
 		updater = new ClientDetailsNameUpdater(repo, bus);
+		handler = new UpdateClientDetailsNameCommandHandler(updater);
 	}
 	
 	
@@ -92,7 +94,7 @@ public class ClientDetailsNameUpdaterTest {
 	}
 	
 	private void updateClientName(String newName) throws Exception {
-		updater.update(client.idValue(), newName);
+		handler.handle(new UpdateClientDetailsNameCommand(client.idValue(), newName));
 	}
 	
 	private void assertEventEquality() throws Exception {

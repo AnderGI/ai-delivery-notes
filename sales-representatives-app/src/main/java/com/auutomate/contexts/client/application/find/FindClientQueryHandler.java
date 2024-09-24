@@ -5,7 +5,7 @@ import com.auutomate.contexts.client_details.domain.ClientId;
 import com.auutomate.contexts.shared.aplication.find.ClientNotFoundException;
 import com.auutomate.contexts.shared.domain.QueryHandler;
 
-public final class FindClientQueryHandler implements QueryHandler<FindClientQuery, ClientResponse> {
+public final class FindClientQueryHandler implements QueryHandler<FindClientQuery, ClientResponse, ClientNotFoundException> {
 
 	private ClientFinder finder;
 	

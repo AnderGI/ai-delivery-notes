@@ -17,17 +17,20 @@ import com.auutomate.contexts.client_details.domain.ClientDetailsObjectMother;
 import com.auutomate.contexts.client_details.domain.ClientDetailsRepository;
 import com.auutomate.contexts.client_details.domain.ClientDetailsSavedDomainEventMother;
 import com.auutomate.contexts.client_details.domain.ClientId;
+import com.auutomate.contexts.client_details.domain.find.ClientDetailsResponse;
 import com.auutomate.contexts.shared.aplication.find.ClientNotFoundException;
 import com.auutomate.contexts.shared.domain.EventBus;
 
 public class ClientDetailsFinderTest {
 	private ClientDetailsRepository repo;
 	private ClientDetailsFinder finder;
+	private FindClientDetailsQueryHandler handler;
 	
 	@BeforeEach
 	void setup() {
 		repo = this.givenAClientDetailsRepoMock();
 		finder = this.givenAClientFinder(repo);
+		handler = new FindClientDetailsQueryHandler(finder);
 	}
 	
 	@Test
@@ -35,11 +38,11 @@ public class ClientDetailsFinderTest {
 		ClientDetails details = ClientDetailsObjectMother.random();
 		ClientId id = ClientIdMother.create(details.idValue());
 		this.mockClientDetailsSearchResult(id, Optional.ofNullable(details));
-		ClientDetails result = finder.find(id.id());
+		ClientDetailsResponse response = handler.handle(new FindClientDetailsQuery(details.idValue()));
 		// Repo search same id
 		this.assertSearchCalledWithClientId(id);
 		// Rep same client result
-		this.assertClientDetailsEquals(result, details);
+		this.assertClientDetailsEqualsResponse(details, response);
 		// Repo is being called
 		this.verifySearchIsBeingCalledOnce(id);
 		
@@ -69,11 +72,13 @@ public class ClientDetailsFinderTest {
 	}
 
 	private void assertClientNotFound(ClientId id) {
-		assertThrows(ClientNotFoundException.class, () -> finder.find(id.id()));
+		assertThrows(ClientNotFoundException.class, () -> handler.handle(new FindClientDetailsQuery(id.id())));
 	}
 	
-	private void assertClientDetailsEquals(ClientDetails actual, ClientDetails expected) {
-		assertEquals(actual, expected);
+	private void assertClientDetailsEqualsResponse(ClientDetails client, ClientDetailsResponse response) {
+		assertEquals(client.idValue(), response.id());
+		assertEquals(client.nameValue(), response.name());
+		assertEquals(client.mailValue(), response.mail());
 	}
 	
 	private void mockClientDetailsSearchResult(ClientId id, Optional<ClientDetails> expectedResult) {

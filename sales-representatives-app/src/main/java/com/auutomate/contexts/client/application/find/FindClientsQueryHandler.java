@@ -1,8 +1,9 @@
 package com.auutomate.contexts.client.application.find;
 
+import com.auutomate.contexts.shared.aplication.find.ClientNotFoundException;
 import com.auutomate.contexts.shared.domain.QueryHandler;
 
-public final class FindClientsQueryHandler implements QueryHandler<FindClientsQuery, ClientsResponse>{
+public final class FindClientsQueryHandler implements QueryHandler<FindClientsQuery, ClientsResponse, ClientNotFoundException>{
 
 	private final ClientFinder finder;
 	
@@ -11,7 +12,7 @@ public final class FindClientsQueryHandler implements QueryHandler<FindClientsQu
 	}
 	
 	@Override
-	public ClientsResponse handle(FindClientsQuery query) throws Exception {
+	public ClientsResponse handle(FindClientsQuery query) throws ClientNotFoundException {
 		return ClientsResponse.fromAggregate(finder.findAll());
 	}
 

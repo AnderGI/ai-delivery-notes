@@ -7,7 +7,7 @@ import com.auutomate.src.shared.domain.DomainEvent;
 
 public final class ProductSavedDomainEvent extends DomainEvent{
 	
-	private final String EVENT_NAME = "agi.backoffice.product.product_saved.1";
+	private final String EVENT_NAME = "agi.backoffice.product.event.product_saved.1";
 	private final String reference;
 	private final String price;
 	private final String description;

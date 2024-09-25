@@ -2,7 +2,10 @@ package com.auutomate.src.backoffice.product.domain;
 
 import java.util.Objects;
 
+import com.auutomate.src.backoffice.product.domain.find.ProductFinder;
+import com.auutomate.src.backoffice.product.domain.remove.ProductRemover;
 import com.auutomate.src.backoffice.product.domain.save.ProductSaver;
+import com.auutomate.src.shared.aplication.find.ProductNotFoundException;
 import com.auutomate.src.shared.domain.EventBus;
 
 public final class Product {
@@ -25,6 +28,15 @@ public final class Product {
 	public static void create(EventBus bus, ProductRepository repo,String reference, String price, String description) throws Exception {
 		Product product = new Product(new ProductReference(reference), new ProductPrice(price), new ProductDescription(description));
 		ProductSaver.save(bus, repo, product);
+	}
+	
+	
+	public static Product search(ProductRepository repo, String reference) throws ProductNotFoundException {
+		return ProductFinder.find(repo, reference);
+	}
+	
+	public static void remove(EventBus bus, ProductRepository repo, String reference) throws ProductNotFoundException {
+		ProductRemover.remove(bus, repo, reference);
 	}
 	
 	public String reference() {

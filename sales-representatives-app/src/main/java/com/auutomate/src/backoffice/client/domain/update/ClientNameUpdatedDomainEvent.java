@@ -6,7 +6,7 @@ import com.auutomate.src.shared.domain.DomainEvent;
 public final class ClientNameUpdatedDomainEvent extends  DomainEvent{
 	private final String clientId;
 	private final String name;
-	private final String eventName = "agi.client_details.event.name_updated.1";
+	private final String eventName = "agi.backoffice.client.event.name_updated.1";
 	public ClientNameUpdatedDomainEvent(String id, String name) {
 		this.clientId = id;
 		this.name = name;

@@ -8,7 +8,7 @@ public final class ClientRegisteredDomainEvent extends DomainEvent{
 	private final String id;
 	private final String mail;
 	private final String name;
-	private final String eventName = "agi.client_details.event.registered.1";
+	private final String eventName = "agi.backoffice.client.event.client_registered.1";
 	public ClientRegisteredDomainEvent(String id, String mail, String name) {
 		super();
 		this.id = id;

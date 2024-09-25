@@ -23,14 +23,15 @@ public class InMemoryEventBus implements EventBus<DomainEvent> {
 	private ClientRepository clientRepo = new InMemoryClientRepository();
 
 	public InMemoryEventBus() {
-		this.map.put("agi.client_details.event.registered.1", Arrays.asList(new RegistarClientOnClientDetailsRegistered(new ClientRegistar(clientRepo))));
-		this.map.put("agi.client_details.event.mail_updated.1", Arrays.asList(new UpdateClientMailOnClientDetailsMailUpdated(new ClientFinder(clientRepo),new ClientMailUpdater(clientRepo))));
-		this.map.put("agi.client_details.event.name_updated.1", Arrays.asList(new UpdateClientNameOnClientDetailsNameUpdated(new ClientFinder(clientRepo),new ClientNameUpdater(clientRepo))));
-				
+		this.map.put("agi.backoffice.client.event.client_registered.1", Arrays.asList(new RegistarClientOnClientDetailsRegistered(new ClientRegistar(clientRepo))));
+		this.map.put("agi.backoffice.client.event.mail_updated.1", Arrays.asList(new UpdateClientMailOnClientDetailsMailUpdated(new ClientFinder(clientRepo),new ClientMailUpdater(clientRepo))));
+		this.map.put("agi.backoffice.client.event.name_updated.1", Arrays.asList(new UpdateClientNameOnClientDetailsNameUpdated(new ClientFinder(clientRepo),new ClientNameUpdater(clientRepo))));
+		this.map.put("agi.backoffice.product.event.product_saved.1", null);
+		this.map.put("agi.backoffice.product.event.product_removed.1", null);
 	}
 
 	@Override
-	public void publish(DomainEvent event) throws Exception {
+	public void publish(DomainEvent event) {
 	    List<? extends EventListener<? extends DomainEvent>> subscribers = map.get(event.getEventName());
 
 	    if (subscribers != null) {

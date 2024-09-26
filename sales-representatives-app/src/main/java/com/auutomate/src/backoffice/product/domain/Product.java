@@ -6,6 +6,8 @@ import com.auutomate.src.backoffice.product.domain.find.ProductFinder;
 import com.auutomate.src.backoffice.product.domain.find.ProductsFinder;
 import com.auutomate.src.backoffice.product.domain.remove.ProductRemover;
 import com.auutomate.src.backoffice.product.domain.save.ProductSaver;
+import com.auutomate.src.backoffice.product.domain.update.ProductDescriptionUpdater;
+import com.auutomate.src.backoffice.product.domain.update.ProductPriceUpdater;
 import com.auutomate.src.shared.aplication.find.ProductNotFoundException;
 import com.auutomate.src.shared.domain.EventBus;
 
@@ -42,6 +44,14 @@ public final class Product {
 	
 	public static void remove(EventBus bus, ProductRepository repo, String reference) throws ProductNotFoundException {
 		ProductRemover.remove(bus, repo, reference);
+	}
+
+	public static void updatePrice(EventBus bus, ProductRepository repo, String reference, String price) throws ProductNotFoundException {
+		ProductPriceUpdater.update(bus, repo, reference, price);
+	}
+	
+	public static void updateDescription(EventBus bus, ProductRepository repo, String reference, String description) throws ProductNotFoundException {
+		ProductDescriptionUpdater.update(bus, repo, reference, description);
 	}
 	
 	public String reference() {

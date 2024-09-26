@@ -1,6 +1,7 @@
 package com.auutomate.src.backoffice.product.application.find;
 
 import com.auutomate.src.backoffice.product.domain.Product;
+import com.auutomate.src.backoffice.product.domain.Products;
 import com.auutomate.src.shared.domain.Response;
 
 public final class ProductResponse implements Response{
@@ -17,6 +18,7 @@ public final class ProductResponse implements Response{
 	public static ProductResponse fromProduct(Product product) {
 		return new ProductResponse(product.reference(), product.price(), product.description());
 	}
+
 	
 	public String reference() {
 		return reference;

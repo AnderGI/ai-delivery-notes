@@ -3,6 +3,7 @@ package com.auutomate.src.backoffice.product.domain;
 import java.util.Objects;
 
 import com.auutomate.src.backoffice.product.domain.find.ProductFinder;
+import com.auutomate.src.backoffice.product.domain.find.ProductsFinder;
 import com.auutomate.src.backoffice.product.domain.remove.ProductRemover;
 import com.auutomate.src.backoffice.product.domain.save.ProductSaver;
 import com.auutomate.src.shared.aplication.find.ProductNotFoundException;
@@ -33,6 +34,10 @@ public final class Product {
 	
 	public static Product search(ProductRepository repo, String reference) throws ProductNotFoundException {
 		return ProductFinder.find(repo, reference);
+	}
+	
+	public static Products searchAll(ProductRepository repo){
+		return ProductsFinder.findAll(repo);
 	}
 	
 	public static void remove(EventBus bus, ProductRepository repo, String reference) throws ProductNotFoundException {
